@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website With Login & Registration | Codehal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+    
+        body {
+    display: flex;
+    height:100%;
+    margin: 0%;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('gege.png') no-repeat center center;
+    background-size: cover;
+    
+}
+/* Glassy Wrapper */
+.wrapper {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2); /* Transparent white background */
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border to enhance glassy look */
+}
+
+/* Transparent Links */
+.login-link, .register-link {
+    color: rgba(226, 236, 235, 0.993); /* Semi-transparent link color */
+    text-decoration: none;
+}
+
+.login-link:hover, .register-link:hover {
+    text-decoration: underline;
+}
+
+/* Transparent Button */
+.btnLogin-popup {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: rgba(0, 121, 107, 0.4); /* Transparent background */
+    color: rgba(255, 255, 255, 0.8); /* Semi-transparent text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    backdrop-filter: blur(5px); /* Slight frosted glass effect on button */
+}
+
+.btnLogin-popup:hover {
+    background-color: rgba(0, 105, 92, 0.5); /* Slightly darker transparent hover background */
+}
+
+/* Transparent Close Icon */
+.icon-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.5); /* Semi-transparent close icon color */
+    cursor: pointer;
+}
+
+/* Form Container */
+.form-container {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+/* Input Styles */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: rgba(8, 77, 62, 0.973); /* Transparent label color */
+    margin-bottom: 5px;
+    display: block;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid rgba(204, 204, 204, 0.5); /* Transparent border */
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.15); /* Transparent input background */
+    color: rgba(0, 0, 0, 0.8); /* Darker text for readability */
+    backdrop-filter: blur(5px); /* Slight blur for frosted glass effect */
+}
+
+/* Forgot Password Link */
+#forgot-password-link {
+    color: rgba(9, 53, 48, 0.966); /* Transparent link color */
+    text-decoration: none;
+}
+
+#forgot-password-link:hover {
+    color: rgba(8, 100, 89, 0.9);
+    text-decoration: underline;
+}
+
+/* Transparent Checkbox Container */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+/* Custom Transparent Checkbox */
+.checkbox-container input[type="checkbox"] {
+    /* Remove default appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+    border: 2px solid rgba(6, 63, 63, 0.767); /* Transparent border color */
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1); /* Transparent background */
+    cursor: pointer;
+    position: relative;
+}
+
+/* Show checkmark on selection */
+.checkbox-container input[type="checkbox"]:checked {
+    background-color: rgba(0, 90, 90, 0.2); /* Slight background color when checked */
+}
+
+.checkbox-container input[type="checkbox"]:checked::before {
+    content: '✓'; /* Custom checkmark */
+    position: absolute;
+    top: -3px;
+    left: 2px;
+    font-size:20px;
+    color: rgba(7, 41, 41, 0.788); /* Semi-transparent checkmark color */
+}
+
+/* Label Styling */
+.checkbox-container label {
+    margin-left: 5px;
+    font-size: 14px;
+    color: rgba(7, 46, 46, 0.8); /* Transparent label color */
+}
+
+
+/* Submit Button */
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: rgba(11, 134, 114, 0.7); /* Transparent button background */
+    color: rgba(255, 255, 255, 0.9); /* Transparent button text color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    backdrop-filter: blur(5px); /* Slight frosted effect on button */
+    box-shadow: 0px 4px 8px rgba(22, 27, 29, 0.692); /* Subtle shadow effect */
+}
+
+button:hover {
+    background-color: rgba(34, 80, 78, 0.781); /* Slightly darker transparent hover */
+    box-shadow: 0px 6px 12px rgba(16, 51, 56, 0.849); /* Darker shadow on hover */
+}
+
+/* Error Messages */
+#error-message, #register-error-message {
+    color: rgba(255, 0, 0, 0.8); /* Semi-transparent error color */
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Wrapper Background Overlay */
+.wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1); /* Light overlay for extra glassy effect */
+    border-radius: 8px;
+    z-index: -1; /* Keep overlay behind the content */
+}
+    
+        
+    </style>
+    
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Login Form -->
+        <div id="login-form" class="form-container active">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="************" required>
+                    <div class="checkbox-container">
+                        <input type="checkbox" onclick="togglePasswordVisibility('password')"> 
+                        <label>Show Password</label>
+                    </div>
+                </div>
+                <button type="submit">Login</button>
+                <p id="error-message"></p>
+            </form>
+            <p>Don't have an account? <a href="#" class="register-link">Register here</a></p>
+            <p><a href="#" id="forgot-password-link">Forgot Password?</a></p>
+        </div>
+
+        <!-- Forgot Password Form -->
+        <div id="forgot-password-form" class="form-container">
+            <h2>Forgot Password</h2>
+            <form id="forgotPasswordForm">
+                <div class="input-group">
+                    <label for="forgot-email">Email</label>
+                    <input type="email" id="forgot-email" name="forgot-email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" name="new-password" placeholder="New Password" required>
+                    <div class="checkbox-container">
+                        <input type="checkbox" onclick="togglePasswordVisibility('new-password')"> 
+                        <label>Show Password</label>
+                    </div>
+                </div>
+                <button type="submit">Submit</button>
+                <p id="forgot-password-error-message"></p>
+            </form>
+            <p>Remembered your password? <a href="#" class="login-link">Login here</a></p>
+        </div>
+
+        <!-- Registration Form -->
+        <div id="register-form" class="form-container">
+            <h2>Create Account</h2>
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" name="reg-name" placeholder="Your Name" required>
+                </div>
+                <div class="input-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" name="reg-email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" name="reg-password" placeholder="************" required>
+                    <div class="checkbox-container">
+                        <input type="checkbox" onclick="togglePasswordVisibility('reg-password')"> 
+                        <label>Show Password</label>
+                    </div>
+                </div>
+                <button type="submit">Register</button>
+                <p id="register-error-message"></p>
+            </form>
+            <p>Already have an account? <a href="#" class="login-link">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        const wrapper = document.querySelector('.wrapper');
+        const loginLink = document.querySelectorAll('.login-link');
+        const registerLink = document.querySelector('.register-link');
+        const forgotPasswordLink = document.getElementById('forgot-password-link');
+
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const forgotPasswordForm = document.getElementById('forgot-password-form');
+
+        let registeredEmail = null;
+        let registeredPassword = null;
+
+        loginLink.forEach(link => {
+            link.addEventListener('click', () => {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                forgotPasswordForm.classList.remove('active');
+            });
+        });
+
+        registerLink.addEventListener('click', () => {
+            registerForm.classList.add('active');
+            loginForm.classList.remove('active');
+            forgotPasswordForm.classList.remove('active');
+        });
+
+        forgotPasswordLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            forgotPasswordForm.classList.add('active');
+            loginForm.classList.remove('active');
+            registerForm.classList.remove('active');
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            if (email && password) {
+                registeredEmail = email;
+                registeredPassword = password;
+                alert('Registration successful');
+                registerForm.classList.remove('active');
+                loginForm.classList.add('active');
+            } else {
+                document.getElementById('register-error-message').textContent = 'All fields are required';
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email === registeredEmail && password === registeredPassword) {
+                alert('Login successful');
+                loginForm.classList.remove('active');
+            } else {
+                document.getElementById('error-message').textContent = 'Incorrect email or password';
+            }
+        });
+
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('forgot-email').value;
+            const newPassword = document.getElementById('new-password').value;
+
+            if (email === registeredEmail) {
+                registeredPassword = newPassword;
+                alert('Password reset successful');
+                forgotPasswordForm.classList.remove('active');
+                loginForm.classList.add('active');
+            } else {
+                document.getElementById('forgot-password-error-message').textContent = 'Email not found';
+            }
+        });
+
+        function togglePasswordVisibility(id) {
+            const passwordField = document.getElementById(id);
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
+        }
+    </script>
+</body>
+</html>
